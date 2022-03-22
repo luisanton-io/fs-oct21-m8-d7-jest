@@ -46,7 +46,7 @@ productsRouter
       } else {
         res
           .status(404)
-          .send({ message: `Product with id ${productId} not found!` })
+          .send({ message: `Product with id ${productId} not found` })
       }
     } catch (error) {
       next(error)
