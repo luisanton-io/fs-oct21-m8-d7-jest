@@ -1,5 +1,5 @@
 import express from "express"
-import productsRouter from "./products"
+import productsRouter from "./products/index.js"
 
 const app = express()
 app.use(express.json())

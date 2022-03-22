@@ -1,5 +1,12 @@
 import { app } from "./app.js";
+import mongoose from "mongoose"
 
-app.listen(3000, () => {
-    console.log('Server is running on port 3000')
+mongoose.connect(process.env.MONGO_URL).then(() => {
+    console.log("Connected to Mongo")
+
+    const port = process.env.PORT || 3000
+
+    app.listen(port, () => {
+        console.log('Server is running on port ' + port)
+    })
 })
