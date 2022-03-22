@@ -75,6 +75,37 @@ describe("Testing the endpoints", () => {
     expect(response.body._id).toBe(createdProductId)
   })
 
+  const updatedProduct = {
+    name: "Test product two",
+    price: 1900,
+  }
+  it("should test that the PUT /products/:id enpoint updates the product", async () => {
+    const response = await client
+      .put(`/products/${createdProductId}`)
+      .send(updatedProduct)
+    expect(response.status).toBe(200)
+    expect(response.body.name).toBe(updatedProduct.name)
+    expect(response.body.price).toBe(updatedProduct.price)
+    expect(typeof response.body.name).toBe("string")
+  })
+
+  it("should test that the PUT /products/:id enpoint returns 404 with a non valid id", async () => {
+    const response = await client
+      .put(`/products/${invalidProductId}`)
+      .send(updatedProduct)
+    expect(response.status).toBe(404)
+  })
+
+  it("should test that the DELETE /products/:id enpoint returns 204 with a valid id", async () => {
+    const response = await client.delete(`/products/${createdProductId}`)
+    expect(response.status).toBe(204)
+  })
+
+  it("should test that the DELETE /products/:id enpoint returns 404 with a non valid id", async () => {
+    const response = await client.delete(`/products/${invalidProductId}`)
+    expect(response.status).toBe(404)
+  })
+
   afterAll(async () => {
     await mongoose.connection.dropDatabase()
     await mongoose.connection.close()

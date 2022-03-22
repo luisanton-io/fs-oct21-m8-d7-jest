@@ -31,5 +31,42 @@ productsRouter
       res.status(400).send(error)
     }
   })
+  .put("/:productId", async (req, res, next) => {
+    try {
+      const productId = req.params.productId
+      const updatedProduct = await Product.findByIdAndUpdate(
+        productId,
+        req.body,
+        {
+          new: true,
+        }
+      )
+      if (updatedProduct) {
+        res.send(updatedProduct)
+      } else {
+        res
+          .status(404)
+          .send({ message: `Product with id ${productId} not found!` })
+      }
+    } catch (error) {
+      next(error)
+    }
+  })
+
+  .delete("/:productId", async (req, res, next) => {
+    try {
+      const productId = req.params.productId
+      const deletedProduct = await Product.findByIdAndDelete(productId)
+      if (deletedProduct) {
+        res.status(204).send()
+      } else {
+        res
+          .status(404)
+          .send({ message: `Product with id ${productId} not found!` })
+      }
+    } catch (error) {
+      next(error)
+    }
+  })
 
 export default productsRouter
