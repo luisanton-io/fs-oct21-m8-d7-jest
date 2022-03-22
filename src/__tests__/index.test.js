@@ -63,18 +63,6 @@ describe("Testing the endpoints", () => {
         createdProductId = response.body[0]._id
     })
 
-    it("should test that the GET /products/:createdId endpoint returns the product we just created", async () => {
-        const response = await client.get(`/products/${createdProductId}`)
-
-        expect(response.body._id).toBe(createdProductId)
-        expect(response.body.name).toBe(validProduct.name)
-    })
-
-    it("should test that the GET /products/:invalidId returns 404", async () => {
-        const response = await client.get(`/products/999999999999999999999999`)
-        expect(response.status).toBe(404)
-    })
-
     afterAll(async () => {
         await mongoose.connection.dropDatabase()
         await mongoose.connection.close()
