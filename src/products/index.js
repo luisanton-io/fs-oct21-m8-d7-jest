@@ -7,16 +7,6 @@ productsRouter
         const products = await Product.find({});
         res.status(200).send(products);
     })
-    .get('/:id', async (req, res) => {
-        const product = await Product.findById(req.params.id);
-
-        if (!product) {
-            res.status(404).send()
-            return
-        }
-
-        res.status(200).send(product);
-    })
     .post('/', async (req, res) => {
         try {
             const product = new Product(req.body)
